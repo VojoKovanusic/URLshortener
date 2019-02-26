@@ -26,8 +26,8 @@ public class ShortingUrlServiceImpl implements ShortingUrlService {
  
 	@Override
 	public void setNumberOfVisitsForThisUrl(String urlPath) {
-		long visits = urlList.get(urlPath).getNumbeOfVisits();
-		urlList.get(urlPath).setNumbeOfVisits(visits += 1);
-		System.out.println(urlList.get(urlPath).getRealUrl() +": "+urlList.get(urlPath).getNumbeOfVisits());
+		long visits = urlList.get(urlPath).getNumberOfVisits() ;
+		urlList.get(urlPath).setNumberOfVisits(visits += 1);
+		System.out.println(urlList.get(urlPath).getRealUrl() +": "+urlList.get(urlPath).getNumberOfVisits());
 	}
 }

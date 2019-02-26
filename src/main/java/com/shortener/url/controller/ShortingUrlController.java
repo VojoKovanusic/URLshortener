@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.shortener.url.service.UserService;
 import com.shortener.url.util.MyUtillityClass;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class ShortingUrlController {
 
 	private ShortingUrlService shortingUrlService;
@@ -39,11 +41,12 @@ public class ShortingUrlController {
 		this.userService = userService;
 	}
 
-	@PostMapping(value = "/shorturl",produces = { "application/json" })
-	public ResponseEntity<Object> getShortUrl(@RequestBody Url url) throws MalformedURLException {
+	@PostMapping(value = "/shorturl")
+	public Url createShortUrl(@RequestBody Url url) throws MalformedURLException {
 		String randomCharForUrl = MyUtillityClass.generateRandomString(5);
 		shortingUrlService.setShortUrl(randomCharForUrl, url);
-		return new ResponseEntity<Object>(url, HttpStatus.OK);
+		System.out.println("randomCharForUrl "+ randomCharForUrl);
+		return url;
 	}
 
 	@GetMapping(value = "/vojo.com/{shortUrlPath}",produces = { "application/json" })
@@ -53,7 +56,7 @@ public class ShortingUrlController {
 		response.sendRedirect(urlList.get(shortUrlPath).getRealUrl());
 
 	}
-
+ 
 	@GetMapping(value = "/statistic/{accountId}",produces = { "application/json" })
 	public ResponseEntity<Object> getStatistic(HttpServletResponse response,
 			@PathVariable("accountId") String accountId) throws IOException {

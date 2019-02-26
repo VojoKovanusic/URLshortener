@@ -9,10 +9,10 @@ public class Url {
 	
 	private String realUrl;
 	private String shortUrl;
-	private long numbeOfVisits;
+	private long numberOfVisits;
 	@Override
 	public String toString() {
-		return "{" + realUrl +":" + numbeOfVisits + "}";
+		return "{" + realUrl +":" + numberOfVisits + "}";
 	}
 
 }
