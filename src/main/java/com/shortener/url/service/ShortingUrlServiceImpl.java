@@ -19,24 +19,15 @@ public class ShortingUrlServiceImpl implements ShortingUrlService {
 
 	@Override
 	public void setShortUrl(String randomChar, Url url) throws MalformedURLException {
-		url.setShortUrl("http://localhost:8090/vojo.com/" + randomChar);
+		url.setShortUrl( "http://localhost:8090/vojo.com/"+ randomChar);
 		urlList.put(randomChar, url);
 
 	}
-
+ 
 	@Override
-	public String generateRandomUrl() {
-		String randomUrl = "";
-		String possibleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		for (int i = 0; i < 5; i++)
-			randomUrl += possibleChars.charAt((int) Math.floor(Math.random() * possibleChars.length()));
-		return randomUrl;
-	}
-
-	@Override
-	public void setNumberOfVisitsForThisUrl(String random) {
-		long visits = urlList.get(random).getNumbeOfVisits();
-		urlList.get(random).setNumbeOfVisits(visits += 1);
-		System.out.println(urlList.get(random).getRealUrl() +": "+urlList.get(random).getNumbeOfVisits());
+	public void setNumberOfVisitsForThisUrl(String urlPath) {
+		long visits = urlList.get(urlPath).getNumbeOfVisits();
+		urlList.get(urlPath).setNumbeOfVisits(visits += 1);
+		System.out.println(urlList.get(urlPath).getRealUrl() +": "+urlList.get(urlPath).getNumbeOfVisits());
 	}
 }

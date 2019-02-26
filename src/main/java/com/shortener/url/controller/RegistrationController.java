@@ -3,8 +3,11 @@ package com.shortener.url.controller;
 import com.shortener.url.domain.Response;
 import com.shortener.url.model.User;
 import com.shortener.url.service.UserService;
+import com.shortener.url.util.MyUtillityClass;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,15 +28,19 @@ public class RegistrationController {
 	}
 
 	@PostMapping(value = "/account", produces = { "application/json" })
-	public ResponseEntity<Response> registration(@RequestBody User user) {
-		User dbUser = userService.save(user);
-		if (dbUser != null) {
-			return new ResponseEntity<>(
-					new Response("{success: 'true', description: 'Your account is opened', password: " + "'xC345Fc0'}"),
+	public ResponseEntity<Response> registration(@Valid @RequestBody User user) {
+		if (!this.userService.isUserExist(user)) {
+			String password = MyUtillityClass.generateRandomString(8);
+			user.setPassword(password);
+			userService.saveUser(user);
+			
+			return new ResponseEntity<>(new Response(
+					"{success: 'true', description: 'Your account is opened', password: " + "'" + password + "'" + "}"),
 					HttpStatus.OK);
 		}
 
-		return null;
+		return new ResponseEntity<>(new Response("{success: 'false', description: 'Your account is not opened,account with that accountId already exist'" + "}"),
+				HttpStatus.OK);
 
 	}
 

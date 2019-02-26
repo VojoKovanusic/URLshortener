@@ -10,5 +10,9 @@ public class Url {
 	private String realUrl;
 	private String shortUrl;
 	private long numbeOfVisits;
+	@Override
+	public String toString() {
+		return "{" + realUrl +":" + numbeOfVisits + "}";
+	}
 
 }

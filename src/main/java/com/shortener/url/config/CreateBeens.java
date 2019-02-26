@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
-
 @Configuration
 public class CreateBeens {
 	@Bean
@@ -20,4 +20,7 @@ public class CreateBeens {
 	@Bean
 	 Map<String, Url> urlList() {
 		return new HashMap<>();
-	}}
+	}
+ 
+
+}

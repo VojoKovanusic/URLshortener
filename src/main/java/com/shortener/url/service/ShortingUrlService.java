@@ -7,8 +7,6 @@ import com.shortener.url.model.Url;
 public interface ShortingUrlService {
 
 	void setShortUrl(String randomChar, Url url) throws MalformedURLException;
-
-	String generateRandomUrl();
-
+ 
 	void setNumberOfVisitsForThisUrl(String random);
 }

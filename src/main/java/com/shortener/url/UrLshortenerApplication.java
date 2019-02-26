@@ -1,5 +1,8 @@
 package com.shortener.url;
  
+import java.sql.SQLException;
+
+import org.apache.catalina.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -8,13 +11,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
  
 
-@SpringBootApplication
+@SpringBootApplication()
 public class UrLshortenerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UrLshortenerApplication.class, args);
 		 
 	}
+ 
 	@Bean
 	public CorsFilter corsFilter() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

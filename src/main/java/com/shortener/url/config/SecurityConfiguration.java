@@ -62,11 +62,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void  configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests()  
+		.authorizeRequests()   
 		.antMatchers("/account").permitAll()
 		.antMatchers("/login").permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		.anyRequest().authenticated();
-		
+
 		httpSecurity.addFilterBefore(authenticationTokenFIlterBean(), UsernamePasswordAuthenticationFilter.class)
 		.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 		
