@@ -41,7 +41,7 @@ public class ShortingUrlController {
 		this.userService = userService;
 	}
 
-	@PostMapping(value = "/shorturl")
+	@PostMapping(value = "/register")
 	public Url createShortUrl(@RequestBody Url url) throws MalformedURLException {
 		String randomCharForUrl = MyUtillityClass.generateRandomString(5);
 		shortingUrlService.setShortUrl(randomCharForUrl, url);
