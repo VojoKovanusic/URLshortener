@@ -21,7 +21,6 @@ import com.shortener.url.domain.UserDTO;
 import com.shortener.url.model.User;
 import com.shortener.url.security.JwtTokenUtil;
 import com.shortener.url.security.JwtUser;
-import com.shortener.url.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")

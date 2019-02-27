@@ -23,31 +23,31 @@ import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
 import com.shortener.url.service.UrlService;
 import com.shortener.url.service.UserService;
+import com.shortener.url.util.MyUtillityClass;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-
 public class UrlController {
-
+	
+	private JSONObject json;
 	private HttpHeaders headers;
 	private UrlService urlService;
 	private UserService userService;
 
 	@Autowired
-	public UrlController(UrlService shortingUrlService, Map<String, Url> urlList, UserService userService,
+	public UrlController(JSONObject json,UrlService shortingUrlService, Map<String, Url> urlList, UserService userService,
 			HttpHeaders httpHeaders) {
 		this.urlService = shortingUrlService;
 		this.userService = userService;
 		this.headers = httpHeaders;
 	}
 
-	@PostMapping(value = "/register")
-	public ResponseEntity<HttpHeaders> createShortUrl(@RequestBody Url url) throws MalformedURLException {
+	@PostMapping(value = "/register", produces = { "application/json" })
+	public String createShortUrl(@RequestBody Url url) throws MalformedURLException {
 
 		urlService.createShortUrl(url);
-		headers.setLocation(URI.create(url.getRealUrl()));
 
-		return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+		return MyUtillityClass.getJSONformatForShortUrl(json,url);
 
 	}
 
@@ -58,20 +58,22 @@ public class UrlController {
 	  
 	   String pathForRealUrl=u.getMyUrlList().get(shortUrlPath).getRealUrl();
 	   this.urlService.setNumberOfVisitsForThisUrl(shortUrlPath);
-	   headers.setLocation(URI.create(pathForRealUrl));
+	 
+	 
+	   System.out.println("pathForRealUrl: "+pathForRealUrl);
+	   this.headers.setLocation(URI.create(pathForRealUrl));
+	   return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);
 	   
-		return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
 	}
 
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
-	public Map<String, Url> getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)
+	public String getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)
 			throws IOException {
-		if (userService.isLoginUser(accountId)) { 
+		if (userService.isLoginUser(accountId)) {
 			User user = userService.findUserByAccountId(accountId);
-			return user.getMyUrlList();
+
+			return MyUtillityClass.getStatisticJSONformat(json,user);
 		}
-		
-		
 		return null;
 	}
 
