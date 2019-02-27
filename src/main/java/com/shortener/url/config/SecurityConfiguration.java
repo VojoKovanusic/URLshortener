@@ -62,7 +62,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void  configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests()   
+		.authorizeRequests()
+		//.antMatchers("/vojo.com/**").permitAll()
 		.antMatchers("/account").permitAll()
 		.antMatchers("/login").permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		.anyRequest().authenticated();

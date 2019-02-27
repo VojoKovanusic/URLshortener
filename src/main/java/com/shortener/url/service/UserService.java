@@ -11,11 +11,14 @@ public interface UserService {
 
 	List<User> getUsers();
 
-	User findByAccountId(String str);
+	User findUserByAccountId(String str);
 
 	boolean isUserExist(User user);
 
 	boolean isLoginUser(String accountId);
 
+	User getCurrentUser();
+	
+	String getCurrentlyLoggingID();
 
 }

@@ -12,7 +12,7 @@ public class Url {
 	private long numberOfVisits;
 	@Override
 	public String toString() {
-		return "{" + realUrl +":" + numberOfVisits + "}";
+		return  getRealUrl() +" : "+getNumberOfVisits();
 	}
 
 }

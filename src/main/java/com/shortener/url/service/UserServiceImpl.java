@@ -2,11 +2,9 @@ package com.shortener.url.service;
 
 import java.util.List;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.shortener.url.model.User;
@@ -33,12 +31,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByAccountId(String accountId) {
+	public User findUserByAccountId(String accountId) {
 
-		User user = this.users.stream()
-				.filter(u -> u.getAccountId().equals(accountId))
-				.findFirst().orElse(null);
-		
+		User user = this.users.stream().filter(u -> u.getAccountId().equals(accountId)).findFirst().orElse(null);
+
 		return user;
 
 	}
@@ -51,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean isLoginUser(String accountId) {
+		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
 			String currentlyLoggingID = ((UserDetails) principal).getUsername();
@@ -58,5 +55,21 @@ public class UserServiceImpl implements UserService {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	public User getCurrentUser() {
+
+		return findUserByAccountId(getCurrentlyLoggingID());
+	}
+	@Override
+	public String getCurrentlyLoggingID() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			((UserDetails) principal).getUsername();
+			return ((UserDetails) principal).getUsername();
+		}
+		return null;
+
 	}
 }

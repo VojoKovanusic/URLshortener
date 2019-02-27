@@ -53,7 +53,7 @@ public class LoginController {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
 			final String token = jwtTokenUtil.generateToken(userDetails);
-System.out.println("token"+token);
+             System.out.println("token"+token);
 			return new ResponseEntity<UserDTO>(new UserDTO(userDetails.getUser(), token), HttpStatus.OK);
 
 		} catch (Exception e) {
