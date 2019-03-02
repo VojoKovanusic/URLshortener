@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shortener.url.model.User;
+import com.shortener.url.service.JSONMessageService;
+import com.shortener.url.service.RandomService;
 import com.shortener.url.service.UserService;
-import com.shortener.url.util.MyUtillityClass;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -31,15 +32,14 @@ public class RegistrationController {
 	@PostMapping(value = "/account", produces = { "application/json" })
 	public String registration(@Valid @RequestBody User user) {
 		if (!this.userService.isUserExist(user)) {
-			String password = MyUtillityClass.generateRandomString(8);
-			System.out.println("registrovao "+password);
+			String password = RandomService.generateRandomString(8);
 			user.setPassword(password);
 			userService.saveUser(user);
 			
-			return MyUtillityClass.getApprovedAccountMessage(json,password);
+			return JSONMessageService.getApprovedAccount(password);
 		}
 
-		return MyUtillityClass.getRejectedAccountMessage(json);
+		return JSONMessageService.getRejectedAccount();
 	}
  
 

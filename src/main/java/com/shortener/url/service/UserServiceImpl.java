@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.shortener.url.model.User;
-import com.shortener.url.util.MyUtillityClass;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
-		String password = MyUtillityClass.getPasswordHash(user.getPassword());
+		String password = RandomService.getPasswordHash(user.getPassword());
 		user.setPassword(password);
 		user.setEnabled(true);
 		users.add(user);

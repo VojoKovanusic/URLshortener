@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
-import com.shortener.url.util.MyUtillityClass;
 
 @Service
 public class UrlServiceImpl implements UrlService {
@@ -21,7 +20,7 @@ public class UrlServiceImpl implements UrlService {
 
 	@Override
 	public void createShortUrl(Url url) throws MalformedURLException {
-		String randomCharForUrl = MyUtillityClass.generateRandomString(5);
+		String randomCharForUrl = RandomService.generateRandomString(5);
 		User user=this.userService.getCurrentUser();
 		url.setShortUrl("http://localhost:8090/vojo.com/"+ randomCharForUrl);
 		user.getMyUrlList().put(randomCharForUrl, url);

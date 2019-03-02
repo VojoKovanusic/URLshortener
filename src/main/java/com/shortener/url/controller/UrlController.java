@@ -21,22 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
+import com.shortener.url.service.JSONMessageService;
 import com.shortener.url.service.UrlService;
 import com.shortener.url.service.UserService;
-import com.shortener.url.util.MyUtillityClass;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class UrlController {
-	
-	private JSONObject json;
+
 	private HttpHeaders headers;
 	private UrlService urlService;
 	private UserService userService;
 
 	@Autowired
-	public UrlController(JSONObject json,UrlService shortingUrlService, Map<String, Url> urlList, UserService userService,
-			HttpHeaders httpHeaders) {
+	public UrlController(JSONObject json, UrlService shortingUrlService, Map<String, Url> urlList,
+			UserService userService, HttpHeaders httpHeaders) {
 		this.urlService = shortingUrlService;
 		this.userService = userService;
 		this.headers = httpHeaders;
@@ -47,23 +46,22 @@ public class UrlController {
 
 		urlService.createShortUrl(url);
 
-		return MyUtillityClass.getJSONformatForShortUrl(json,url);
+		return JSONMessageService.getForShortUrl(url);
 
 	}
 
 	@GetMapping(value = "/vojo.com/{shortUrlPath}")
-	public ResponseEntity<HttpHeaders> redirectToFullUrl( @PathVariable("shortUrlPath") String shortUrlPath) {
+	public ResponseEntity<HttpHeaders> redirectToFullUrl(@PathVariable("shortUrlPath") String shortUrlPath) {
 
-	   User u=this.userService.findUserByAccountId(userService.getCurrentlyLoggingID());
-	  
-	   String pathForRealUrl=u.getMyUrlList().get(shortUrlPath).getRealUrl();
-	   this.urlService.setNumberOfVisitsForThisUrl(shortUrlPath);
-	 
-	 
-	   System.out.println("pathForRealUrl: "+pathForRealUrl);
-	   this.headers.setLocation(URI.create(pathForRealUrl));
-	   return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);
-	   
+		User u = this.userService.findUserByAccountId(userService.getCurrentlyLoggingID());
+
+		String pathForRealUrl = u.getMyUrlList().get(shortUrlPath).getRealUrl();
+		this.urlService.setNumberOfVisitsForThisUrl(shortUrlPath);
+
+		System.out.println("pathForRealUrl: " + pathForRealUrl);
+		this.headers.setLocation(URI.create(pathForRealUrl));
+		return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);
+
 	}
 
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
@@ -72,7 +70,7 @@ public class UrlController {
 		if (userService.isLoginUser(accountId)) {
 			User user = userService.findUserByAccountId(accountId);
 
-			return MyUtillityClass.getStatisticJSONformat(json,user);
+			return JSONMessageService.getForStatistic(user);
 		}
 		return null;
 	}
