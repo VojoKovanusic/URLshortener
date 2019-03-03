@@ -1,22 +1,19 @@
 package com.shortener.url.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shortener.url.model.User;
-import com.shortener.url.service.JSONMessageService;
-import com.shortener.url.util.Util;
+import com.shortener.url.service.MessageService;
 import com.shortener.url.service.UserService;
+import com.shortener.url.util.Util;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,13 +39,9 @@ public class RegistrationController {
 
 			log.info("{} is successfully registered", user);
 
-			return new ResponseEntity<>(JSONMessageService.getApprovedAccount(password), HttpStatus.CREATED);
+			return new ResponseEntity<>(MessageService.getApprovedAccount(password), HttpStatus.CREATED);
 		}
-		return new ResponseEntity<>(JSONMessageService.getRejectedAccount(), HttpStatus.CONFLICT);
+		return new ResponseEntity<>(MessageService.getRejectedAccount(), HttpStatus.CONFLICT);
 	}
-
-	@GetMapping("/users")
-	public List<User> test() {
-		return userService.getUsers();
-	}
+ 
 }

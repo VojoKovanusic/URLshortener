@@ -22,7 +22,7 @@ public class User implements Serializable {
 
 	private Long id;
 	@NotNull
-	@Size(min=3, message="Name should have atleast 3 characters")
+	@Size(min=3, message="accountId should have atleast 3 characters")
 	private String accountId ;
     
 	private Map<String , Url > myUrlList=new HashMap<>();

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
-import com.shortener.url.service.JSONMessageService;
+import com.shortener.url.service.MessageService;
 import com.shortener.url.service.UrlService;
 import com.shortener.url.service.UserService;
 
@@ -34,21 +34,19 @@ public class UrlController {
 	private UserService userService;
 
 	@Autowired
-	public UrlController(JSONObject json, UrlService shortingUrlService, Map<String, Url> urlList,
+	public UrlController(UrlService shortingUrlService, Map<String, Url> urlList,
 			UserService userService, HttpHeaders httpHeaders) {
 		this.urlService = shortingUrlService;
 		this.userService = userService;
 		this.headers = httpHeaders;
-	}
-
+	} 
 	@PostMapping(value = "/register", produces = { "application/json" })
 	public ResponseEntity<String> createShortUrl(@RequestBody Url url) throws MalformedURLException {
 		
 		urlService.createShortUrl(url);
 		
-		return new ResponseEntity<String>(JSONMessageService.getForShortUrl(url),HttpStatus.CREATED);
-	}
-
+		return new ResponseEntity<String>(MessageService.getForShortUrl(url),HttpStatus.CREATED);
+	} 
 	@GetMapping(value = "/vojo.com/{shortUrlPath}")
 	public ResponseEntity<HttpHeaders> redirectToFullUrl(@PathVariable("shortUrlPath") String shortUrlPath) {
 
@@ -62,17 +60,16 @@ public class UrlController {
 		
 		return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);
 
-	}
-
+	} 
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
 	public ResponseEntity<String> getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)
 			throws IOException {
 		if (userService.isLoginUser(accountId)) {
 			User user = userService.findUserByAccountId(accountId);
 
-			return new ResponseEntity<String>(JSONMessageService.getForStatistic(user),HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>(MessageService.getForStatistic(user),HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<String>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
-
+ 
 }

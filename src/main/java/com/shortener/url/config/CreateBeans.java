@@ -18,19 +18,11 @@ public class CreateBeans {
 	List<User> users() {
 		return new ArrayList<>();
 	}
-	@Bean
-	 Map<String, Url> urlList() {
-		return new HashMap<>();
-	}
  
 	@Bean
 	HttpHeaders header() {
 		return new HttpHeaders();
 	}
-	
-	@Bean
-	JSONObject json() {
-		return new JSONObject();
-	}
+ 
 	 
 }

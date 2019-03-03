@@ -6,7 +6,8 @@
 
 -framevork: spring
 
--nikava baza podataka nije korištena, čak ni embedded(konflikte sa portovima imam), tako da neke stvari izgledaju malo drugačije od uobičajenih
+-nikava baza podataka nije korištena, čak ni embedded(konflikte sa portovima imam), tako da neke stvari izgledaju malo drugačije od uobičajenih, pre svega se odnosi na servise dao koji nedostaju
+, tako da sam morao napraviti singlton @Bean users(), u koji sam smjestio sve korisnike i njihove podatke.
 
 -svi pozivi idu preko http://localhost:8090
 
