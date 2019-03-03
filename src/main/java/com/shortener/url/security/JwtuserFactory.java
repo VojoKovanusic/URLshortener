@@ -20,7 +20,7 @@ public class JwtuserFactory {
 		return new JwtUser
 				(user.getId(), user.getAccountId(), user.getPassword(), user,
 						maptoGrantedAuthorities(new ArrayList<String>
-						(Arrays.asList("ROLE_"+user.getRole()))), user.isEnabled());
+						(Arrays.asList("ROLE_"+user.getRole()))), true);
 	}
 
 	private static List<GrantedAuthority> maptoGrantedAuthorities(List<String> authorities) {

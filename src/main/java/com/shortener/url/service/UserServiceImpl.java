@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService {
 	public User saveUser(User user) {
 		String password = Util.getPasswordHash(user.getPassword());
 		user.setPassword(password);
-		user.setEnabled(true);
 		users.add(user);
 		return user;
 	}

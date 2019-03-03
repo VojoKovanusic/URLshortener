@@ -6,6 +6,7 @@ import java.net.URI;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,33 +41,42 @@ public class UrlController {
 		this.userService = userService;
 		this.headers = httpHeaders;
 	} 
+	
 	@PostMapping(value = "/register", produces = { "application/json" })
-	public ResponseEntity<String> createShortUrl(@RequestBody Url url) throws MalformedURLException {
+	public ResponseEntity<String> createShortUrl(@Valid @RequestBody Url url) throws MalformedURLException {
 		
 		urlService.createShortUrl(url);
 		
 		return new ResponseEntity<String>(MessageService.getForShortUrl(url),HttpStatus.CREATED);
 	} 
+	
 	@GetMapping(value = "/vojo.com/{shortUrlPath}")
 	public ResponseEntity<HttpHeaders> redirectToFullUrl(@PathVariable("shortUrlPath") String shortUrlPath) {
 
-		User u = this.userService.findUserByAccountId(userService.getCurrentlyLoggingID());
+		User user = this.userService.findUserByAccountId(userService.getCurrentlyLoggingID());
 
-		String pathForRealUrl = u.getMyUrlList().get(shortUrlPath).getRealUrl();
+		String pathForRealUrl = user.getMyUrlList().get(shortUrlPath).getRealUrl();
+		int redirectType = user.getMyUrlList().get(shortUrlPath).getRedirectType();
+		
+		
 		this.urlService.setNumberOfVisitsForThisUrl(shortUrlPath);
 
-		System.out.println("pathForRealUrl: " + pathForRealUrl);
 		this.headers.setLocation(URI.create(pathForRealUrl));
-		
+		System.out.println("redirectType"+redirectType);
+		if(redirectType==301)
 		return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);
-
+		
+	    return new ResponseEntity<>(this.headers, HttpStatus.FOUND);
 	} 
+	
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
 	public ResponseEntity<String> getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)
 			throws IOException {
 		if (userService.isLoginUser(accountId)) {
 			User user = userService.findUserByAccountId(accountId);
-
+			
+			System.out.println(user.getMyUrlList());
+			
 			return new ResponseEntity<String>(MessageService.getForStatistic(user),HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<String>(HttpStatus.METHOD_NOT_ALLOWED);

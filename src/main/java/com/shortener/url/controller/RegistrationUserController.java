@@ -20,12 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @Slf4j
-public class RegistrationController {
+public class RegistrationUserController {
 
 	private UserService userService;
 
 	@Autowired
-	public RegistrationController(UserService userService) {
+	public RegistrationUserController(UserService userService) {
 		this.userService = userService;
 	}
 

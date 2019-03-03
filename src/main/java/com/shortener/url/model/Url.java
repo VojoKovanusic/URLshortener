@@ -1,4 +1,6 @@
 package com.shortener.url.model;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -8,10 +10,12 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class Url {
-	@NotNull
+	@NotNull(message="unesite neku ...")
 	private String realUrl;
 	private String shortUrl;
-	private String redirectType = "302";
+	 @Min(value = 301, message = "redirectType must be 301 or 302")
+	 @Max(value = 302, message = "redirectType must be 301 or 302")
+	private int redirectType = 302;
 	private long numberOfVisits;
  
 
