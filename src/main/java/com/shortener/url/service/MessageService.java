@@ -1,6 +1,5 @@
 package com.shortener.url.service;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
 
 import com.shortener.url.model.Url;

@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
