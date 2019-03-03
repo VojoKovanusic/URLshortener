@@ -56,18 +56,18 @@ public class UrlController {
 		User user = this.userService.findUserByAccountId(userService.getCurrentlyLoggingID());
 
 		String pathForRealUrl = user.getMyUrlList().get(shortUrlPath).getRealUrl();
-		int redirectType = user.getMyUrlList().get(shortUrlPath).getRedirectType();
-		
-		
+
 		this.urlService.setNumberOfVisitsForThisUrl(shortUrlPath);
 
 		this.headers.setLocation(URI.create(pathForRealUrl));
-		System.out.println("redirectType"+redirectType);
-		if(redirectType==301)
-		return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);
-		
-	    return new ResponseEntity<>(this.headers, HttpStatus.FOUND);
-	} 
+	 
+		if(this.urlService.is301RedirectType(shortUrlPath, user))	{
+		return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);}
+		else {
+	    return new ResponseEntity<>(this.headers, HttpStatus.FOUND);}
+	}
+
+ 
 	
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
 	public ResponseEntity<String> getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)

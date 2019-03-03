@@ -40,4 +40,9 @@ public class UrlServiceImpl implements UrlService {
 		user.getMyUrlList().get(shortUrlPath).setNumberOfVisits(visits += 1);
 	
 	}
+
+	@Override
+	public boolean is301RedirectType(String shortUrlPath, User user) {
+		 return user.getMyUrlList().get(shortUrlPath).getRedirectType()==301; 
+	}
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class Url {
-	@NotNull(message="unesite neku ...")
+	@NotNull
 	private String realUrl;
 	private String shortUrl;
 	 @Min(value = 301, message = "redirectType must be 301 or 302")
