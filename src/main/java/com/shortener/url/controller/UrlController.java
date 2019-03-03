@@ -42,12 +42,11 @@ public class UrlController {
 	}
 
 	@PostMapping(value = "/register", produces = { "application/json" })
-	public String createShortUrl(@RequestBody Url url) throws MalformedURLException {
-
+	public ResponseEntity<String> createShortUrl(@RequestBody Url url) throws MalformedURLException {
+		
 		urlService.createShortUrl(url);
-
-		return JSONMessageService.getForShortUrl(url);
-
+		
+		return new ResponseEntity<String>(JSONMessageService.getForShortUrl(url),HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/vojo.com/{shortUrlPath}")
@@ -60,19 +59,20 @@ public class UrlController {
 
 		System.out.println("pathForRealUrl: " + pathForRealUrl);
 		this.headers.setLocation(URI.create(pathForRealUrl));
+		
 		return new ResponseEntity<>(this.headers, HttpStatus.MOVED_PERMANENTLY);
 
 	}
 
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
-	public String getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)
+	public ResponseEntity<String> getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)
 			throws IOException {
 		if (userService.isLoginUser(accountId)) {
 			User user = userService.findUserByAccountId(accountId);
 
-			return JSONMessageService.getForStatistic(user);
+			return new ResponseEntity<String>(JSONMessageService.getForStatistic(user),HttpStatus.ACCEPTED);
 		}
-		return null;
+		return new ResponseEntity<String>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 }

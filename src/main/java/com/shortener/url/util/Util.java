@@ -1,24 +1,19 @@
-package com.shortener.url.service;
+package com.shortener.url.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.shortener.url.model.Url;
-import com.shortener.url.model.User;
-
-public class RandomService {
+public class Util {
 
 	public static String getPasswordHash(String password) {
 		return new BCryptPasswordEncoder().encode(password);
 	}
-	
-	public static String generateRandomString(int numberOfChar) {
+
+	public static String generateString(int numberOfChar) {
 		String posibileChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		String password = RandomStringUtils.random( numberOfChar, posibileChar );
-		 
+		String password = RandomStringUtils.random(numberOfChar, posibileChar);
+
 		return password;
 	}
 
-	 
 }

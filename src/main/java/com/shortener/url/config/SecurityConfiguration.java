@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public AuthenticationTokenFilter authenticationTokenFIlterBean() {
+	public AuthenticationTokenFilter authenticationTokenFilterBean() {
 		return new AuthenticationTokenFilter();
 	}
 	
@@ -63,12 +63,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.authorizeRequests()
-		//.antMatchers("/vojo.com/**").permitAll()
 		.antMatchers("/account").permitAll()
 		.antMatchers("/login").permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		.anyRequest().authenticated();
 
-		httpSecurity.addFilterBefore(authenticationTokenFIlterBean(), UsernamePasswordAuthenticationFilter.class)
+		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
 		.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 		
 		httpSecurity.headers().cacheControl();

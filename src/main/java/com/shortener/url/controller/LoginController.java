@@ -1,8 +1,5 @@
 package com.shortener.url.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,6 +19,9 @@ import com.shortener.url.model.User;
 import com.shortener.url.security.JwtTokenUtil;
 import com.shortener.url.security.JwtUser;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class LoginController {
@@ -39,8 +39,7 @@ public class LoginController {
 	}
 
 	@PostMapping(value = "/login", produces = {"application/json" })
-	public ResponseEntity<UserDTO> userLogin(@RequestBody User user, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResponseEntity<UserDTO> userLogin(@RequestBody User user ) {
 		
 		try {
 
@@ -52,8 +51,13 @@ public class LoginController {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
 			final String token = jwtTokenUtil.generateToken(userDetails);
-             System.out.println("token"+token);
-			return new ResponseEntity<UserDTO>(new UserDTO(userDetails.getUser(), token), HttpStatus.OK);
+   
+	            UserDTO userDTO = UserDTO.builder()
+	                .user(userDetails.getUser())
+	                .token(token)
+	                .build();
+	            log.info("Token: {}",userDTO.getToken());
+	            return new ResponseEntity<>(userDTO, HttpStatus.OK);
 
 		} catch (Exception e) {
 			throw new UnauthorizedException(" Message" + e.getMessage());

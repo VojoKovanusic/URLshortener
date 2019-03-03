@@ -13,7 +13,7 @@ import org.springframework.http.HttpHeaders;
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
 @Configuration
-public class CreateBeens {
+public class CreateBeans {
 	@Bean
 	List<User> users() {
 		return new ArrayList<>();
