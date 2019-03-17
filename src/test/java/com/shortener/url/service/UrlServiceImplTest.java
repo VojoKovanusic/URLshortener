@@ -2,27 +2,19 @@ package com.shortener.url.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
-
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
-import com.shortener.url.service.UrlServiceImpl;
-import com.shortener.url.service.UserService;
-import com.shortener.url.util.Util;
 @RunWith(MockitoJUnitRunner.class)
 
 class UrlServiceImplTest {
@@ -34,20 +26,20 @@ class UrlServiceImplTest {
     UserServiceImpl userService;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
 
     @Test
-    final public void testSetNumberOfVisits() {
+    public final void testSetNumberOfVisits() {
 
         Url url =getUrl();
 
         Map<String, Url> myUrlList = new HashMap<>();
         myUrlList.put(url.getShortUrl(), url);
 
-        User user = getFakeUser( myUrlList);
+        User user = getUser( myUrlList);
 
         when(userService.getCurrentUser()).thenReturn(user);
 
@@ -56,7 +48,7 @@ class UrlServiceImplTest {
     }
 
 
-    private User getFakeUser(Map<String, Url> myUrlList) {
+    private User getUser(Map<String, Url> myUrlList) {
         return User.builder()
                 .accountId("vojo").myUrlList(myUrlList)
                 .build();

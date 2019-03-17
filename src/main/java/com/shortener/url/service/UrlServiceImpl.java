@@ -22,6 +22,7 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public void createShortUrl(Url url) {
+
         String randomCharForUrl = Util.generateString(5);
 
         User user = this.userService.getCurrentUser();
@@ -35,23 +36,22 @@ public class UrlServiceImpl implements UrlService {
     @Override
     public long setNumberOfVisitsForThisUrl(String shortUrlPath) {
 
-        User user = null;
+        User user;
 
         try {
-
 
             user = this.userService.getCurrentUser();
 
             long visits = user.getMyUrlList().get(shortUrlPath).getNumberOfVisits();
 
             user.getMyUrlList().get(shortUrlPath)
-                    .setNumberOfVisits(visits += 1);
+                    .setNumberOfVisits(visits + 1);
 
             return user.getMyUrlList()
                     .get(shortUrlPath)
                     .getNumberOfVisits();
 
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
 
         }
         return 0;
@@ -59,6 +59,8 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public boolean is301RedirectType(String shortUrlPath, User user) {
-        return user.getMyUrlList().get(shortUrlPath).getRedirectType() == 301;
+        return user.getMyUrlList().
+                get(shortUrlPath).
+                getRedirectType() == 301;
     }
 }
