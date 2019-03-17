@@ -15,8 +15,13 @@ import com.shortener.url.util.Util;
 @Service
 public class UserServiceImpl implements UserService {
 
+
+	private List<User> users;
+
 	@Autowired
-	List<User> users;
+	public UserServiceImpl(List<User> users) {
+		this.users = users;
+	}
 
 	@Override
 	public User saveUser(User user) {
@@ -34,9 +39,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserByAccountId(String accountId) {
 
-		User user = this.users.stream().filter(u -> u.getAccountId().equals(accountId)).findFirst().orElse(null);
-
-		return user;
+     return  this.users.stream()
+			 .filter(u -> u.getAccountId()
+			 .equals(accountId))
+			 .findFirst()
+			 .orElse(null);
 
 	}
 
@@ -66,6 +73,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getCurrentlyLoggingID() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		if (principal instanceof UserDetails) {
 			((UserDetails) principal).getUsername();
 			return ((UserDetails) principal).getUsername();

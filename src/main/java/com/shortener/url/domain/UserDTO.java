@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class UserDTO {
+ public class UserDTO {
 
 	private User user;
 	private String token;

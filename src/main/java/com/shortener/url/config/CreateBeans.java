@@ -1,8 +1,11 @@
 package com.shortener.url.config;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.shortener.url.model.Url;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -14,11 +17,10 @@ public class CreateBeans {
 	List<User> users() {
 		return new ArrayList<>();
 	}
- 
+
 	@Bean
 	HttpHeaders header() {
 		return new HttpHeaders();
 	}
- 
-	 
 }
+

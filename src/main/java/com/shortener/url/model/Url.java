@@ -17,6 +17,6 @@ public class Url {
 	 @Max(value = 302, message = "redirectType must be 301 or 302")
 	private int redirectType = 302;
 	private long numberOfVisits;
- 
+
 
 }

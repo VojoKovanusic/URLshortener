@@ -32,12 +32,12 @@ public class MessageService {
 		return new JSONObject().put(SUCCESS_KEY, false)
 				.put(DESCRIPTION_KEY, "Account with that accountId already exist").toString();
 	}
-	
+
 	public static JSONObject registerUserExample() {
 	return new JSONObject()
 			.put("accountId","nekakvVasUsername");
 	}
-	
+
 	public static JSONObject registerUrlExample() {
 		return new JSONObject()
 				.put("realUrl","putanju koju želite skratiti")

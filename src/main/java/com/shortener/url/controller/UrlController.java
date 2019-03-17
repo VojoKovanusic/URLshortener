@@ -1,11 +1,7 @@
 package com.shortener.url.controller;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +30,7 @@ public class UrlController {
 	private UserService userService;
 
 	@Autowired
-	public UrlController(UrlService shortingUrlService, Map<String, Url> urlList,
+	public UrlController(UrlService shortingUrlService,
 			UserService userService, HttpHeaders httpHeaders) {
 		this.urlService = shortingUrlService;
 		this.userService = userService;
@@ -46,7 +42,7 @@ public class UrlController {
 		
 		urlService.createShortUrl(url);
 		
-		return new ResponseEntity<String>(MessageService.getForShortUrl(url),HttpStatus.CREATED);
+		return new ResponseEntity<>(MessageService.getForShortUrl(url),HttpStatus.CREATED);
 	} 
 	
 	@GetMapping(value = "/vojo.com/{shortUrlPath}")
@@ -69,16 +65,13 @@ public class UrlController {
  
 	
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
-	public ResponseEntity<String> getStatistic(HttpServletResponse response, @PathVariable("accountId") String accountId)
-			throws IOException {
+	public ResponseEntity<String> getStatistic(@PathVariable("accountId") String accountId)  {
 		if (userService.isLoginUser(accountId)) {
 			User user = userService.findUserByAccountId(accountId);
-			
-			System.out.println(user.getMyUrlList());
-			
-			return new ResponseEntity<String>(MessageService.getForStatistic(user),HttpStatus.ACCEPTED);
+
+			return new ResponseEntity<>(MessageService.getForStatistic(user),HttpStatus.ACCEPTED);
 		}
-		return new ResponseEntity<String>(HttpStatus.METHOD_NOT_ALLOWED);
+		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
  
 }

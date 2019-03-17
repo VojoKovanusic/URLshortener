@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-public class LoginController {
+class LoginController {
 
 	@Value("${jwt.header}")
 	private String tokenHeader;

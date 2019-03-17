@@ -15,7 +15,7 @@ public class HelpController {
 	
 		String message = MessageService.getHelpPageInfo();
 		
-		return new ResponseEntity<String>(message, HttpStatus.OK);
+		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 
 

@@ -1,13 +1,13 @@
 package com.shortener.url.service;
 
-import java.net.MalformedURLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
 import com.shortener.url.util.Util;
+
+
 @Service
 public class UrlServiceImpl implements UrlService {
 
@@ -19,7 +19,7 @@ public class UrlServiceImpl implements UrlService {
 	}
 
 	@Override
-	public void createShortUrl(Url url) throws MalformedURLException {
+	public void createShortUrl(Url url)  {
 		String randomCharForUrl = Util.generateString(5);
 		
 		User user=this.userService.getCurrentUser();
@@ -37,7 +37,7 @@ public class UrlServiceImpl implements UrlService {
 		
 		long visits = user.getMyUrlList().get(shortUrlPath).getNumberOfVisits();
 		
-		user.getMyUrlList().get(shortUrlPath).setNumberOfVisits(visits += 1);
+		user.getMyUrlList().get(shortUrlPath).setNumberOfVisits(visits + 1);
 	
 	}
 
