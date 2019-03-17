@@ -33,24 +33,24 @@ public class MessageService {
 				.put(DESCRIPTION_KEY, "Account with that accountId already exist").toString();
 	}
 
-	public static JSONObject registerUserExample() {
+	private static JSONObject registerUserExample() {
 	return new JSONObject()
 			.put("accountId","nekakvVasUsername");
 	}
 
-	public static JSONObject registerUrlExample() {
+	private static JSONObject registerUrlExample() {
 		return new JSONObject()
 				.put("realUrl","putanju koju želite skratiti")
 				.put("redirectType","301|302");
 		}
 
-	public static JSONObject loginExample() {
+	private static JSONObject loginExample() {
 		 
 		return registerUserExample()
 				.put("password", "ovdjeUnosuteVasIzgenerisaniPassword");
 	}
 	public static String getHelpPageInfo() {
-		String message="DOBRO DOSLI NA POMOCNU STRANICU "
+		return "DOBRO DOSLI NA POMOCNU STRANICU "
 				+ "\n\n-Korišteni su sledeći alati:spring boot, spring security, spring RESTful, maven, lombok"
 				+ "\n\n-Namjena aplikacijE je da  pravite vlastite, skraćene url-ove, na osnovu pravih"
 				+ "\n\n-Za provjeru rada aplikacije preporučujem postman,"
@@ -68,6 +68,6 @@ public class MessageService {
 				+ "\n\n-PROVJERA VASE STATISTIKE se nalaz na putanji :http://localhost:8090/statistic/{AccountId}, metoda GET"
 				+ "\nPrimjer: http://localhost:8090/statistic/accountId"
 				+ "\nobavezno u postmanu podesiti Authorisation->TYPE->Bearer Token-->unjeti token koji smo dobili na logovanju";
-		return message;
+
 	}
 }

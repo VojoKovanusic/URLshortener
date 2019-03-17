@@ -9,7 +9,7 @@ public interface UrlService {
 
 	void createShortUrl(Url url) throws MalformedURLException;
  
-	void setNumberOfVisitsForThisUrl(String shortUrlPath);
+	long setNumberOfVisitsForThisUrl(String shortUrlPath);
 
 	boolean is301RedirectType(String shortUrlPath, User user);
 }

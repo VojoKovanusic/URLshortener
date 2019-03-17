@@ -6,15 +6,12 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor 
+@Builder
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6945475342210470677L;
