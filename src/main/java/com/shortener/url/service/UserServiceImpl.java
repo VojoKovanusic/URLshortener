@@ -17,15 +17,17 @@ public class UserServiceImpl implements UserService {
 
 
 	private List<User> users;
-
+    private Util util;
 	@Autowired
-	public UserServiceImpl(List<User> users) {
+	public UserServiceImpl(List<User> users,Util util)
+	{
 		this.users = users;
+		this.util=util;
 	}
 
 	@Override
 	public User saveUser(User user) {
-		String password = Util.getPasswordHash(user.getPassword());
+		String password = this.util.getPasswordHash(user.getPassword());
 		user.setPassword(password);
 		users.add(user);
 		return user;

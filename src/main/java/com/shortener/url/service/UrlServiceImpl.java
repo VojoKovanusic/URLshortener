@@ -13,24 +13,28 @@ import com.shortener.url.util.Util;
 public class UrlServiceImpl implements UrlService {
 
     private UserService userService;
-
+    private Util util;
     @Autowired
 
-    public UrlServiceImpl(UserService userService) {
+    public UrlServiceImpl(UserService userService,Util util) {
         this.userService = userService;
+        this.util=util;
     }
 
     @Override
-    public void createShortUrl(Url url) {
+    public String createShortUrl(Url url) {
 
-        String randomCharForUrl = Util.generateString(5);
+        String randomCharForUrl = this.util.generateString(5);
 
         User user = this.userService.getCurrentUser();
 
         url.setShortUrl("http://localhost:8090/vojo.com/" + randomCharForUrl);
 
-        user.getMyUrlList().put(randomCharForUrl, url);
+         user.getMyUrlList().put(randomCharForUrl, url);
 
+        log.info("{} MyUrlList ", user.getMyUrlList());
+
+        return url.getShortUrl();
     }
 
     @Override

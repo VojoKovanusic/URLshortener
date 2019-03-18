@@ -7,7 +7,7 @@ import com.shortener.url.model.User;
 
 public interface UrlService {
 
-	void createShortUrl(Url url) throws MalformedURLException;
+	String createShortUrl(Url url);
  
 	long setNumberOfVisitsForThisUrl(String shortUrlPath);
 

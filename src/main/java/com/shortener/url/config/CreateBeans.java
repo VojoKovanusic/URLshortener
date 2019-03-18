@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.shortener.url.model.Url;
+import com.shortener.url.util.Util;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,10 @@ public class CreateBeans {
 	@Bean
 	HttpHeaders header() {
 		return new HttpHeaders();
+	}
+	@Bean
+	Util getUtil(){
+		return new Util();
 	}
 }
 

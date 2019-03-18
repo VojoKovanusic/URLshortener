@@ -23,25 +23,32 @@ import lombok.extern.slf4j.Slf4j;
  class RegistrationUserController {
 
 	private UserService userService;
+	private  MessageService messageService;
+	private Util util;
 
 	@Autowired
-	public RegistrationUserController(UserService userService) {
+	public RegistrationUserController(UserService userService,MessageService messageService,Util util) {
 		this.userService = userService;
+		this.messageService=messageService;
+		this.util=util;
+
 	}
 
 	@PostMapping(value = "/account", produces = { "application/json" })
 	public ResponseEntity<String> registration(@Valid @RequestBody User user) {
+
 		if (!this.userService.isUserExist(user)) {
 
-			String password = Util.generateString(8);
+			String password = this.util.generateString(8);
 			user.setPassword(password);
 			userService.saveUser(user);
 
-			log.info("{} is successfully registered", user);
+			log.info("{} is successfully registered", user.getAccountId());
 
-			return new ResponseEntity<>(MessageService.getApprovedAccount(password), HttpStatus.CREATED);
+			return new ResponseEntity<>(messageService.getApprovedAccount(password), HttpStatus.CREATED);
 		}
-		return new ResponseEntity<>(MessageService.getRejectedAccount(), HttpStatus.CONFLICT);
+
+		return new ResponseEntity<>(messageService.getRejectedAccount(), HttpStatus.CONFLICT);
 	}
  
 }

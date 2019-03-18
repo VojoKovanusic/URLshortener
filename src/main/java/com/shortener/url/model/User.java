@@ -8,10 +8,9 @@ import javax.validation.constraints.NotNull;
 
 import lombok.*;
 
-@Setter
-@Getter
-@ToString
-@Builder
+@Getter @Setter
+@NoArgsConstructor
+
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6945475342210470677L;
@@ -20,11 +19,10 @@ public class User implements Serializable {
 	@NotNull
 	private String accountId ;
     
-	private Map<String , Url > myUrlList=new HashMap<>();
+	private Map<String , Url > myUrlList = new HashMap<>();
 
 	private String password;
 
 	private String role;
-
 
 }
