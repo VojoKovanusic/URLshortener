@@ -2,6 +2,7 @@ package com.shortener.url.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +17,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.shortener.url.model.Url;
 import com.shortener.url.model.User;
-@RunWith(MockitoJUnitRunner.class)
 
+@RunWith(MockitoJUnitRunner.class)
 class UrlServiceImplTest {
 
     @InjectMocks
@@ -35,52 +36,54 @@ class UrlServiceImplTest {
 
 
     @Test
-        void testSetNumberOfVisits() {
+    void testSetNumberOfVisits() {
 
-        Url url =getUrl();
+        Url url = getUrl();
 
         Map<String, Url> myUrlList = new HashMap<>();
+
         myUrlList.put(url.getShortUrl(), url);
 
-        User user = getUser( myUrlList);
+        User user = getUser(myUrlList);
 
         when(userService.getCurrentUser()).thenReturn(user);
-
 
         assertEquals(1, urlService.setNumberOfVisitsForThisUrl("http://localhost:8090/vojo.com/short"));
     }
 
 
     private User getUser(Map<String, Url> myUrlList) {
-      User user=new User();
-      user.setAccountId("vojo");
-        user.setMyUrlList(myUrlList)  ;
 
-                return user;
+        User user = new User();
+        user.setAccountId("vojo");
+        user.setMyUrlList(myUrlList);
+
+        return user;
     }
 
 
     private Url getUrl() {
-        Url url=new Url();
+        Url url = new Url();
         url.setRealUrl("real url....");
         url.setShortUrl("http://localhost:8090/vojo.com/short");
-        return url;}
+        return url;
+    }
 
 
- 	@Test
- 	  void testCreateShortUrl()  {
- 		Url url = getUrl();
+    @Test
+    void testCreateShortUrl() {
+        Url url = getUrl();
 
- 		Map<String, Url> myUrlList = new HashMap<>();
- 		myUrlList.put(url.getShortUrl(), url);
+        Map<String, Url> myUrlList = new HashMap<>();
+        myUrlList.put(url.getShortUrl(), url);
 
 
- 		User user = getUser(myUrlList);
- 		when(util.generateString(5)).thenReturn("short");
+        User user = getUser(myUrlList);
+        when(util.generateString(5)).thenReturn("short");
 
- 		when(userService.getCurrentUser()).thenReturn(user);
+        when(userService.getCurrentUser()).thenReturn(user);
 
- 		assertEquals(url.getShortUrl(), urlService.createShortUrl(url));
- 	}
+        assertEquals(url.getShortUrl(), urlService.createShortUrl(url));
+    }
 
 }

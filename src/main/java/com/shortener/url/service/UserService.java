@@ -9,7 +9,7 @@ public interface UserService {
    
 	User saveUser(User user);
 
-	List<User> getUsers();
+	 User getUser(String accountId);
 
 	User findUserByAccountId(String str);
 

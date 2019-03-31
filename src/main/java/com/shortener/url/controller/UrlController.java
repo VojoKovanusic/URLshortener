@@ -1,6 +1,6 @@
 package com.shortener.url.controller;
 
-import java.net.MalformedURLException;
+
 import java.net.URI;
 import javax.validation.Valid;
 
@@ -69,6 +69,7 @@ public class UrlController {
 
 	@GetMapping(value = "/statistic/{accountId}", produces = { "application/json" })
 	public ResponseEntity<String> getStatistic(@PathVariable("accountId") String accountId)  {
+		
 		if (userService.isLoginUser(accountId)) {
 			User user = userService.findUserByAccountId(accountId);
 
