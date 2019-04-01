@@ -10,8 +10,11 @@ public class Util {
 	}
 
 	public String generateString(int numberOfChar) {
-		String posibileChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		String password = RandomStringUtils.random(numberOfChar, posibileChar);
+
+		String posibileChar =
+				"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		String password =
+				RandomStringUtils.random(numberOfChar, posibileChar);
 
 		return password;
 	}
