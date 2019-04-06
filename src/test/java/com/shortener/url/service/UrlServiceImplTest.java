@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.shortener.url.util.Util;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -36,6 +37,7 @@ class UrlServiceImplTest {
 
 
     @Test
+    @DisplayName("Testing number of visits")
     void testSetNumberOfVisits() {
 
         Url url = getUrl();
@@ -71,6 +73,7 @@ class UrlServiceImplTest {
 
 
     @Test
+    @DisplayName("Create short url")
     void testCreateShortUrl() {
         Url url = getUrl();
 

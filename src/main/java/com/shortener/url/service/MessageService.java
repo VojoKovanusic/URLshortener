@@ -21,7 +21,10 @@ public class MessageService {
 
 	public   String getForStatistic(User user) {
 		JSONObject json = new JSONObject();
-		user.getMyUrlList().forEach((shortUrl, url) -> json.put(url.getRealUrl(), url.getNumberOfVisits()));
+		user.getMyUrlList()
+				.forEach((shortUrl, url) ->
+				json.put(url.getRealUrl(), url.getNumberOfVisits()));
+
 		return json.toString();
 	}
 
